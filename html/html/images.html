@@ -1,0 +1,87 @@
+<div wm-slider>
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem1.jpg"
+            alt="Muro cidade"
+            width="513" height="342"
+            title="Muro Cidade por Tarso Bessa">
+    </p>
+
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem2.gif"
+            alt="Intro Cod3r" height="342">
+    </p>
+
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem3.png"
+            alt="Rio de Janeiro" height="342">
+    </p>
+
+    <p class="texto">
+        <img src="http://files.cod3r.com.br/curso-web/avatar.jpg"
+            alt="Avatar" height="50" align="left">
+        Texto afhhabefiija fii ahwf ah a  qwfhaWBF WH FIAHBF HW FIJEFNOEJF A OV BASDU
+        afjaneojfa efj aeofaojfa ojfanof ao fao faefaoebf aofnaoe f aosfboa sdfoais a
+        lakefal apef apefm lakenfkanfa alkfnlakdsf laksfnçaksfça aks faksfçkasçfkasnf
+    </p>
+
+    <p>
+        <picture>
+            <source media="(min-width: 600px)" srcset="http://files.cod3r.com.br/curso-web/logo-larga.png">
+            <img src="http://files.cod3r.com.br/curso-web/logo-estreita.png" alt="Logo">
+        </picture>
+    </p>
+</div>
+
+<style>
+    p {
+        position: absolute;
+        display: none;
+    }
+
+    .texto {
+        width: 400px;
+    }
+
+    .texto img {
+        margin-right: 10px;
+    }
+</style>
+
+<script>
+    function move (element, begin, end, step, callback) {
+        const newBegin = begin - step
+        if(newBegin >= end) {
+            element.style.left = newBegin + 'px'
+            setTimeout(() => move(element, newBegin, end, step, callback), 1)
+        } else {
+            callback()
+        }
+    }
+
+    function getNext (list, currentItem) {
+        const i = list.indexOf(currentItem) + 1
+        return i < list.length ? list[i] : list[0]
+    }
+
+    function showSlide (slides, slide) {
+        slide.style.display = 'block'
+
+        const begin = innerWidth
+        const end = -slide.clientWidth
+
+        slide.style.left = `${begin}px`
+
+        move(slide, begin, end, 2, () => {
+            slide.style.display = 'none'
+            showSlide(slides, getNext(slides, slide))
+        })
+    }
+
+    function slider () {
+        const elements = document.querySelectorAll('[wm-slider] > p')
+        const slides = Array.from(elements)
+        showSlide(slides, slides[0])
+    }
+
+    slider()
+</script>
